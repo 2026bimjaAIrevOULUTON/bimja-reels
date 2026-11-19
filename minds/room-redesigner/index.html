@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIMja Room Redesigner: your room, in any style</title>
+<meta name="description" content="Send a room photo, a floor plan or just an idea. Get a photoreal redesign, three style options, a to-scale layout and an indicative budget. Runs on Venice.">
+<meta property="og:title" content="BIMja Room Redesigner: your room, in any style">
+<meta property="og:description" content="Photo, plan or idea in. Photoreal redesign, style options, layout and budget out.">
+<meta property="og:image" content="https://2026bimjaairevouluton.github.io/bimja-reels/minds/room-redesigner/img/bed-japandi.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E8ECEA;     /* drafting paper */
+  --sheet:#F6F7F5;     /* lighter panel */
+  --ink:#1C2A35;       /* blue-black ink */
+  --ink-2:#4A5862;     /* secondary text */
+  --line:#C5CDCB;      /* drafting line */
+  --oak:#A9773F;       /* oak, used for prices and selection */
+  --plan:#2C5A86;      /* plan blue, actions */
+  --sage:#6F7E61;
+  --display:"Familjen Grotesk",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;background:var(--paper);opacity:.86;z-index:-1}
+a{color:var(--plan)}
+:focus-visible{outline:3px solid var(--plan);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(46px,7vw,92px);font-weight:700}
+h2{font-size:clamp(32px,4vw,48px);font-weight:700}
+h2+.lede{margin-top:14px}
+h3{font-size:22px;font-weight:600}
+p{margin:0 0 1em;max-width:62ch}
+.lede{font-size:21px;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:18px;
+  padding:15px 24px;border-radius:999px;border:2px solid var(--ink);text-decoration:none;cursor:pointer;background:none;color:var(--ink)}
+.btn.primary{background:var(--plan);border-color:var(--plan);color:#fff}
+.btn.primary:hover{background:#244d74}
+.btn:hover{transform:translateY(-1px)}
+
+/* top bar */
+header{padding:22px 0}
+header .wrap{display:flex;justify-content:space-between;align-items:center}
+.mark{font-family:var(--display);font-weight:700;font-size:22px;text-decoration:none;color:var(--ink)}
+.mark small{font-weight:500;color:var(--ink-2);font-size:15px;margin-left:8px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 1.25fr;gap:48px;align-items:center;padding:28px 0 72px}
+.hero .copy p{margin-top:22px}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.stage{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:14px;box-shadow:0 30px 60px -30px rgba(28,42,53,.45)}
+.frame{position:relative;aspect-ratio:981/551;overflow:hidden;border-radius:3px;background:#cfd6d4}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .55s ease}
+.frame img.on{opacity:1}
+.dim{position:absolute;left:12px;bottom:10px;font-family:var(--display);font-size:14px;color:#fff;background:rgba(28,42,53,.7);padding:4px 10px;border-radius:99px}
+.tabs{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.tab{flex:1;min-width:120px;font-family:var(--display);font-size:16px;font-weight:600;padding:12px 14px;border:1.5px solid var(--line);
+  background:transparent;border-radius:4px;cursor:pointer;color:var(--ink-2);text-align:left}
+.tab[aria-selected="true"]{border-color:var(--oak);color:var(--ink);background:#fff;box-shadow:inset 0 -3px 0 var(--oak)}
+.tab span{display:block;font-family:var(--body);font-weight:400;font-size:14px;color:var(--ink-2)}
+
+/* brief builder */
+section{padding:72px 0}
+.builder{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+.panel{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:28px}
+fieldset{border:0;margin:0 0 22px;padding:0}
+legend{font-family:var(--display);font-weight:600;font-size:17px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-block;padding:9px 15px;border:1.5px solid var(--line);border-radius:999px;font-size:16px;cursor:pointer;background:#fff}
+.chip input:checked+span{border-color:var(--ink);background:var(--ink);color:#fff}
+.chip input:focus-visible+span{outline:3px solid var(--plan);outline-offset:2px}
+.size{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.size label{font-size:15px;color:var(--ink-2)}
+.size input{width:84px;font:inherit;padding:8px 10px;border:1.5px solid var(--line);border-radius:4px;background:#fff}
+textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--line);border-radius:4px;background:#fff;resize:vertical}
+.out{position:sticky;top:24px}
+.estimate{font-family:var(--display);font-size:44px;font-weight:700;color:var(--oak);line-height:1}
+.est-note{font-size:14px;color:var(--ink-2);margin-top:6px}
+.msg{background:#fff;border:1.5px dashed var(--line);border-radius:4px;padding:14px 16px;font-size:16px;margin:20px 0;white-space:pre-wrap}
+.toast{font-family:var(--display);font-size:15px;color:var(--sage);min-height:22px;margin-top:10px}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:32px}
+.gallery figure{margin:0;align-self:start;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:10px}
+.gallery img{width:100%;display:block;border-radius:3px}
+.gallery figcaption{font-size:15px;color:var(--ink-2);padding:8px 2px 0}
+.g-a,.g-b,.g-c,.g-d{grid-column:span 3}
+.gallery img{aspect-ratio:16/9;object-fit:cover}
+.g-c img{object-fit:contain;background:#1b1712}
+
+/* steps: a real sequence */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:32px;counter-reset:s}
+.step{border-top:2px solid var(--ink);padding-top:16px}
+.step h3::before{counter-increment:s;content:counter(s);display:inline-block;width:30px;height:30px;line-height:30px;text-align:center;
+  border-radius:50%;background:var(--ink);color:#fff;font-size:15px;margin-right:10px;vertical-align:2px}
+.step p{font-size:16px;margin-top:8px}
+
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:20px 48px;margin-top:28px}
+.faq h3{font-size:19px;margin-bottom:6px}
+.faq p{font-size:16px;color:var(--ink-2)}
+
+footer{padding:48px 0 64px;border-top:1px solid var(--line)}
+footer .tag{font-family:var(--display);font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.02em}
+footer p{font-size:15px;color:var(--ink-2)}
+
+@media (max-width:900px){
+  .hero,.builder{grid-template-columns:1fr}
+  .out{position:static}
+  .steps{grid-template-columns:1fr 1fr}
+  .faq{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
+  .g-a,.g-b,.g-c,.g-d{grid-column:auto}
+}
+@media (max-width:520px){.steps{grid-template-columns:1fr}.wrap{padding:0 18px}body{font-size:17px}
+  .mark small{display:none}header .btn{padding:10px 16px;font-size:16px}
+  .tab{min-width:0;padding:10px;font-size:15px}.tab span{display:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="mark" href="#">BIMja <small>Room Redesigner</small></a>
+  <a class="btn" href="https://venice.ai/minds/bimja-room-redesigner-10738" target="_blank" rel="noopener">Open in Venice</a>
+</div></header>
+
+<main>
+<div class="wrap hero">
+  <div class="copy">
+    <h1>Same room. Your style.</h1>
+    <p class="lede">Send a room photo, a floor plan, or just describe the space. Get a photoreal redesign, three style options to compare, a to-scale layout and an indicative budget, in one chat.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#brief">Plan my room</a>
+      <a class="btn" href="https://venice.ai/minds/bimja-room-redesigner-10738" target="_blank" rel="noopener">Try it now</a>
+    </div>
+  </div>
+  <div class="stage" aria-label="Style switcher">
+    <div class="frame" id="frame">
+      <img src="img/bed-modern-indian.jpg" alt="Master bedroom redesigned in Modern Indian style: carved teak bed, terracotta tile floor, brass pendants" class="on" data-k="indian">
+      <img src="img/bed-japandi.jpg" alt="The same bedroom in Japandi style: low oak bed, limewash walls, jute rug, paper lantern" data-k="japandi">
+      <img src="img/bed-luxury.jpg" alt="The same bedroom in Luxury contemporary style: green velvet headboard, walnut panelling, brass lamps" data-k="luxury">
+      <span class="dim">Master bedroom, 12 × 14 ft</span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-k="indian">Modern Indian<span>teak, jaali, brass</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-k="japandi">Japandi<span>oak, limewash, linen</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-k="luxury">Luxury<span>velvet, walnut, brass</span></button>
+    </div>
+  </div>
+</div>
+
+<section id="brief"><div class="wrap">
+  <h2>Plan your room in 30 seconds</h2>
+  <p class="lede">Pick what fits. We write the perfect first message for the designer, so your first render is already close.</p>
+  <div class="builder" style="margin-top:28px">
+    <form class="panel" id="form" onsubmit="return false">
+      <fieldset><legend>Which space?</legend><div class="chips" data-name="room"></div></fieldset>
+      <fieldset><legend>Size</legend>
+        <div class="size">
+          <label>Width (ft) <input type="number" id="w" value="12" min="4" max="60"></label>
+          <label>Length (ft) <input type="number" id="l" value="14" min="4" max="80"></label>
+        </div>
+      </fieldset>
+      <fieldset><legend>Style</legend><div class="chips" data-name="style"></div></fieldset>
+      <fieldset><legend>Budget</legend><div class="chips" data-name="budget"></div></fieldset>
+      <fieldset><legend>Mood</legend><div class="chips" data-name="vibe"></div></fieldset>
+      <fieldset><legend>What will you send?</legend><div class="chips" data-name="input"></div></fieldset>
+      <fieldset><legend>Anything to keep or change? (optional)</legend>
+        <textarea id="notes" rows="2" placeholder="e.g. keep the wardrobe, balcony door on the right, need a study corner"></textarea>
+      </fieldset>
+    </form>
+    <div class="out panel" aria-live="polite">
+      <h3>Indicative budget</h3>
+      <div class="estimate" id="est">₹—</div>
+      <div class="est-note" id="estnote">Finishes, furniture and lighting. Varies by city and vendor.</div>
+      <div class="msg" id="msg"></div>
+      <button class="btn primary" id="go" type="button">Copy and open designer</button>
+      <div class="toast" id="toast"></div>
+      <p style="font-size:15px;color:var(--ink-2);margin-top:12px">Paste the message in the chat. If you picked photo or plan, attach it before sending.</p>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Real outputs from the designer</h2>
+  <p class="lede">Unedited renders and boards from test chats.</p>
+  <div class="gallery">
+    <figure class="g-a"><img src="img/living-japandi.jpg" alt="Living room 12 by 15 feet in Japandi: oak sofa, jute rug, arched balcony with sheer curtains"><figcaption>HD final. Living room, 12 × 15 ft, budget band. Asked in Hinglish.</figcaption></figure>
+    <figure class="g-b"><img src="img/living-terracotta.jpg" alt="Living room variant with a terracotta accent wall and paper floor lamp"><figcaption>Variant with a terracotta accent wall.</figcaption></figure>
+    <figure class="g-c"><img src="img/design-board.jpg" alt="Interactive design board with a five-colour palette and materials grid"><figcaption>Design board: palette, materials, to-scale layout and a live budget calculator.</figcaption></figure>
+    <figure class="g-d"><img src="img/bed-japandi.jpg" alt="Japandi bedroom with oak wardrobe and window view"><figcaption>One of three style options for a 12 × 14 ft bedroom.</figcaption></figure>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>How a session goes</h2>
+  <div class="steps">
+    <div class="step"><h3>Send</h3><p>A photo, a floor plan, a PDF, or a few lines about the room. English or Hinglish.</p></div>
+    <div class="step"><h3>See it</h3><p>A photoreal render and an interactive board with layout and budget, in the first reply.</p></div>
+    <div class="step"><h3>Compare</h3><p>Three styles side by side, then tweak one thing at a time: lighter floor, new sofa, another angle.</p></div>
+    <div class="step"><h3>Finalise</h3><p>An HD render of the same room plus a spec sheet you can hand to your contractor.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Before you start</h2>
+  <div class="faq">
+    <div><h3>Where does it run?</h3><p>On Venice. You chat with it in your Venice account; drafts use free image models, and the HD final uses credits.</p></div>
+    <div><h3>Will it move my walls?</h3><p>No. With a photo it keeps your walls, windows and layout. Structural changes are only shown if you ask, with a note to check with an engineer.</p></div>
+    <div><h3>How accurate is the budget?</h3><p>It is indicative, built from typical rates for each band. Real quotes vary by city, vendor and finish.</p></div>
+    <div><h3>Is my chat private?</h3><p>Venice marks this Mind as Anon: the creator cannot see your chats.</p></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="tag">It's not AI BIM. It's agentic BIM.</div>
+  <p>Built by BIMja. Renders are AI-generated concepts for planning, not construction drawings.</p>
+</div></footer>
+
+<script>
+// ---- style switcher ----
+const tabs=[...document.querySelectorAll('.tab')],imgs=[...document.querySelectorAll('#frame img')];
+let auto=true;
+function show(k){tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.k===k));imgs.forEach(i=>i.classList.toggle('on',i.dataset.k===k))}
+tabs.forEach(t=>t.addEventListener('click',()=>{auto=false;show(t.dataset.k)}));
+tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];n.focus();n.click()}}));
+const order=['indian','japandi','luxury'];let idx=0;
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){setInterval(()=>{if(!auto)return;idx=(idx+1)%3;show(order[idx])},3200)}
+
+// ---- brief builder ----
+const OPTS={
+  room:['Living room','Bedroom','Kitchen','Bathroom','Balcony','Home office','Shop front'],
+  style:['Modern Indian','Japandi','Scandinavian','Industrial','Luxury','Boho','Surprise me'],
+  budget:['Budget','Mid','Premium'],
+  vibe:['Calm and airy','Warm and cosy','Bold','Surprise me'],
+  input:['Just describing it','Room photo','Floor plan or PDF']
+};
+const DEF={room:'Bedroom',style:'Japandi',budget:'Mid',vibe:'Calm and airy',input:'Just describing it'};
+// indicative ₹ per sq ft for finishes, furniture and lighting
+const RATE={Budget:[300,550],Mid:[800,1400],Premium:[1800,3200]};
+for(const [name,list] of Object.entries(OPTS)){
+  const box=document.querySelector(`[data-name="${name}"]`);
+  list.forEach(v=>{const l=document.createElement('label');l.className='chip';
+    l.innerHTML=`<input type="radio" name="${name}" value="${v}" ${DEF[name]===v?'checked':''}><span>${v}</span>`;box.appendChild(l)});
+}
+const $=id=>document.getElementById(id);
+const val=n=>document.querySelector(`input[name="${n}"]:checked`).value;
+const inr=n=>'₹'+(n>=100000?(n/100000).toFixed(n>=1000000?1:2).replace(/\.?0+$/,'')+' L':Math.round(n/1000)+'k');
+function update(){
+  const w=Math.max(4,+$('w').value||0),l=Math.max(4,+$('l').value||0),a=w*l,b=val('budget'),r=RATE[b];
+  $('est').textContent=inr(a*r[0])+' – '+inr(a*r[1]);
+  $('estnote').textContent=`${a} sq ft at ${b.toLowerCase()} rates. Finishes, furniture and lighting; varies by city and vendor.`;
+  const inp=val('input'),notes=$('notes').value.trim();
+  let m=`Design my ${val('room').toLowerCase()}, about ${w} x ${l} ft. Style: ${val('style')}. Budget: ${b}. Mood: ${val('vibe').toLowerCase()}.`;
+  if(inp==='Room photo')m+=` I've attached a photo, keep my walls, windows and layout.`;
+  else if(inp==='Floor plan or PDF')m+=` I've attached the plan, read the sizes and render it.`;
+  else m+=` No photo, just imagine it and render.`;
+  if(notes)m+=` Notes: ${notes}`;
+  m+=` Then show me the design board.`;
+  $('msg').textContent=m;
+}
+$('form').addEventListener('input',update);update();
+$('go').addEventListener('click',async()=>{
+  const text=$('msg').textContent;
+  try{await navigator.clipboard.writeText(text);$('toast').textContent='Message copied. Paste it in the chat that just opened.'}
+  catch(e){$('toast').textContent='Copy blocked by your browser: select the message above and copy it.'}
+  window.open('https://venice.ai/chat/minds/bimja-room-redesigner-10738','_blank','noopener');
+});
+</script>
+</body>
+</html>
